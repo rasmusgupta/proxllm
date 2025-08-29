@@ -35,7 +35,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
       <Avatar className="h-8 w-8 shrink-0">
         <AvatarFallback className={cn(
           "text-xs",
-          isUser ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-700"
+          isUser ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground"
         )}>
           {isUser ? <User className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
         </AvatarFallback>
@@ -52,13 +52,13 @@ export function MessageBubble({ message }: MessageBubbleProps) {
           <Card className={cn(
             "p-3 shadow-sm",
             isUser 
-              ? "bg-blue-500 text-white" 
-              : "bg-white border"
+              ? "bg-primary text-primary-foreground" 
+              : "bg-muted border-border"
           )}>
             <div className="prose prose-sm max-w-none">
               <div className={cn(
                 "whitespace-pre-wrap text-sm leading-relaxed",
-                isUser ? "text-white" : "text-gray-900"
+                isUser ? "text-primary-foreground" : "text-foreground"
               )}>
                 {message.content}
               </div>

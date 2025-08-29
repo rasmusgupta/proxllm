@@ -135,7 +135,7 @@ export function ChatArea() {
 
   return (
     <div className="flex flex-col h-full bg-background">
-      <ChatHeader />
+      {currentConversation && <ChatHeader />}
       
       <div className="flex-1 flex flex-col min-h-0">
         {currentConversation ? (
@@ -155,7 +155,7 @@ export function ChatArea() {
             </div>
           </>
         ) : (
-          <EmptyState />
+          <EmptyState onSendMessage={handleSendMessage} />
         )}
       </div>
     </div>

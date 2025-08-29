@@ -1,6 +1,6 @@
 'use client';
 
-import { MessageCircle, Sparkles, Zap, Shield } from 'lucide-react';
+import { Cpu, Sparkles, Zap, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useConversationStore } from '@/lib/stores/conversation-store';
@@ -8,46 +8,46 @@ import { useSettingsStore } from '@/lib/stores/settings-store';
 // import { useSession } from 'next-auth/react';
 
 const EXAMPLE_PROMPTS = [
-  "Explain quantum computing in simple terms",
-  "Write a Python function to sort a list",
-  "What are the latest trends in web development?",
-  "Help me plan a weekend trip to Paris"
+  "Design a simple LED circuit with current limiting resistor",
+  "Create a microcontroller-based temperature sensor PCB",
+  "Help me route high-speed signals on a 4-layer PCB",
+  "Generate footprint for custom connector component"
 ];
 
 const FEATURES = [
   {
-    icon: MessageCircle,
-    title: "Natural Conversations",
-    description: "Work with AI models using natural language"
+    icon: Cpu,
+    title: "PCB Design Assistance",
+    description: "Get expert help with circuit design and layout"
   },
   {
     icon: Sparkles,
-    title: "Multiple Models",
-    description: "Switch between OpenAI, Anthropic, Google, and more"
+    title: "File Generation",
+    description: "Generate PCB files, schematics, and components"
   },
   {
     icon: Zap,
-    title: "Real-time Streaming",
-    description: "Get responses as they're generated"
+    title: "Design Review",
+    description: "AI-powered analysis of your PCB layouts"
   },
   {
     icon: Shield,
-    title: "Secure & Private",
-    description: "Your conversations are encrypted and private"
+    title: "Component Selection",
+    description: "Smart recommendations for parts and footprints"
   }
 ];
 
-export function EmptyState() {
+interface EmptyStateProps {
+  onSendMessage: (message: string) => void;
+}
+
+export function EmptyState({ onSendMessage }: EmptyStateProps) {
   const { createConversation } = useConversationStore();
   const { selectedProvider, defaultModel } = useSettingsStore();
 
-  const handleExamplePrompt = (prompt: string) => {
-    createConversation({
-      userId: 'demo-user',
-      title: prompt.slice(0, 50) + (prompt.length > 50 ? '...' : ''),
-      modelProvider: selectedProvider,
-      modelName: defaultModel,
-    });
+  const handleExamplePrompt = async (prompt: string) => {
+    // Send the message directly - ChatArea will create conversation if none exists
+    onSendMessage(prompt);
   };
 
   return (
@@ -56,11 +56,11 @@ export function EmptyState() {
         {/* Header */}
         <div className="space-y-4">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl text-white">
-            <MessageCircle className="w-8 h-8" />
+            <Cpu className="w-8 h-8" />
           </div>
-          <h1 className="text-3xl font-bold">Welcome to ProxLLM</h1>
+          <h1 className="text-3xl font-bold">Welcome to PCB Design Assistant</h1>
           <p className="text-lg text-muted-foreground">
-            Your gateway to powerful language models. Start a new project to explore AI capabilities.
+            Your AI-powered companion for IoT PCB design. Start a new project to begin designing.
           </p>
         </div>
 
@@ -74,12 +74,12 @@ export function EmptyState() {
               <Button
                 key={index}
                 variant="outline"
-                className="p-4 h-auto text-left justify-start hover:bg-accent hover:text-accent-foreground w-full min-h-fit"
+                className="p-4 h-auto text-left justify-start hover:bg-accent hover:text-accent-foreground w-full min-h-[60px]"
                 onClick={() => handleExamplePrompt(prompt)}
               >
-                <div className="flex items-start gap-3 w-full">
-                  <MessageCircle className="w-4 h-4 mt-0.5 shrink-0 text-muted-foreground" />
-                  <span className="text-sm leading-relaxed break-words">{prompt}</span>
+                <div className="flex items-start gap-3 w-full overflow-hidden">
+                  <Cpu className="w-4 h-4 mt-1 shrink-0 text-muted-foreground" />
+                  <span className="text-sm leading-5 break-words whitespace-normal text-wrap overflow-hidden">{prompt}</span>
                 </div>
               </Button>
             ))}

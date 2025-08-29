@@ -13,8 +13,9 @@ export const PROVIDERS: ProviderInfo[] = [
     id: 'anthropic',
     name: 'Anthropic',
     models: [
-      { id: 'claude-3-5-haiku-20241022', name: 'Claude 3.5 Haiku' },
+      { id: 'claude-sonnet-4-20250514', name: 'Claude Sonnet 4' },
       { id: 'claude-3-5-sonnet-20241022', name: 'Claude 3.5 Sonnet' },
+      { id: 'claude-3-5-haiku-20241022', name: 'Claude 3.5 Haiku' },
       { id: 'claude-3-opus-20240229', name: 'Claude 3 Opus' },
     ]
   },
@@ -22,8 +23,12 @@ export const PROVIDERS: ProviderInfo[] = [
     id: 'openai',
     name: 'OpenAI',
     models: [
-      { id: 'gpt-4', name: 'GPT-4' },
+      { id: 'o1', name: 'GPT-o1' },
+      { id: 'o1-mini', name: 'GPT-o1 Mini' },
+      { id: 'gpt-4o', name: 'GPT-4o' },
+      { id: 'gpt-4o-mini', name: 'GPT-4o Mini' },
       { id: 'gpt-4-turbo', name: 'GPT-4 Turbo' },
+      { id: 'gpt-4', name: 'GPT-4' },
       { id: 'gpt-3.5-turbo', name: 'GPT-3.5 Turbo' },
     ]
   },
@@ -31,6 +36,7 @@ export const PROVIDERS: ProviderInfo[] = [
     id: 'google',
     name: 'Google',
     models: [
+      { id: 'gemini-2.0-flash-exp', name: 'Gemini 2.0 Flash (Experimental)' },
       { id: 'gemini-1.5-pro', name: 'Gemini 1.5 Pro' },
       { id: 'gemini-1.5-flash', name: 'Gemini 1.5 Flash' },
     ]

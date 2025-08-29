@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import { MessageCircle, MoreHorizontal, Trash2, Edit3, Check, X, Star } from 'lucide-react';
+import { Cpu, MoreHorizontal, Trash2, Edit3, Check, X, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -86,53 +86,55 @@ function ConversationItem({ conversation, isActive, onClick, isCollapsed = false
   return (
     <div
       className={cn(
-        "group flex items-center gap-2 p-2 rounded-lg cursor-pointer hover:bg-accent transition-colors",
+        "group flex items-center gap-2 p-2 rounded-lg cursor-pointer hover:bg-accent transition-colors mx-1 w-full max-w-full overflow-hidden",
         isActive && "bg-accent",
         isCollapsed && "justify-center"
       )}
       onClick={onClick}
     >
       <div className="flex items-center gap-1 shrink-0">
-        <MessageCircle className={cn("w-4 h-4 text-muted-foreground", isCollapsed && "w-5 h-5")} />
+        <Cpu className={cn("w-4 h-4 text-muted-foreground", isCollapsed && "w-5 h-5")} />
         {conversation.isStarred && (
           <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
         )}
       </div>
       
       {!isCollapsed && (
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 overflow-hidden flex items-center">
           {isEditing ? (
-            <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center gap-1 w-full" onClick={(e) => e.stopPropagation()}>
               <Input
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="h-6 text-sm px-1"
+                className="h-6 text-sm px-1 flex-1 min-w-0"
                 autoFocus
               />
-              <Button
-                size="icon"
-                variant="ghost"
-                className="h-6 w-6"
-                onClick={handleSaveEdit}
-              >
-                <Check className="w-3 h-3" />
-              </Button>
-              <Button
-                size="icon"
-                variant="ghost"
-                className="h-6 w-6"
-                onClick={handleCancelEdit}
-              >
-                <X className="w-3 h-3" />
-              </Button>
+              <div className="flex shrink-0 gap-1">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="h-6 w-6"
+                  onClick={handleSaveEdit}
+                >
+                  <Check className="w-3 h-3" />
+                </Button>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="h-6 w-6"
+                  onClick={handleCancelEdit}
+                >
+                  <X className="w-3 h-3" />
+                </Button>
+              </div>
             </div>
           ) : (
-            <div className="space-y-1">
-              <p className="text-sm font-medium truncate">
+            <div className="flex-1 min-w-0 overflow-hidden">
+              <p className="text-sm font-medium truncate whitespace-nowrap overflow-hidden text-ellipsis" title={conversation.title}>
                 {conversation.title}
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-muted-foreground truncate whitespace-nowrap overflow-hidden text-ellipsis">
                 {formatDistanceToNow(conversation.updatedAt, { addSuffix: true })}
               </p>
             </div>
@@ -146,7 +148,7 @@ function ConversationItem({ conversation, isActive, onClick, isCollapsed = false
             <Button
               size="icon"
               variant="ghost"
-              className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+              className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity duration-150 shrink-0"
               onClick={(e) => e.stopPropagation()}
             >
               <MoreHorizontal className="w-3 h-3" />
@@ -196,7 +198,7 @@ export function ConversationList({ isCollapsed = false }: ConversationListProps)
     
     return (
       <div className="p-4 text-center text-sm text-muted-foreground">
-        <MessageCircle className="w-8 h-8 mx-auto mb-2 opacity-50" />
+        <Cpu className="w-8 h-8 mx-auto mb-2 opacity-50" />
         <p>No projects yet</p>
         <p className="text-xs mt-1">Start a new project to begin</p>
       </div>
@@ -204,7 +206,7 @@ export function ConversationList({ isCollapsed = false }: ConversationListProps)
   }
 
   return (
-    <div className="space-y-1 py-2">
+    <div className="space-y-1 py-2 w-full overflow-hidden">
       {conversations.map((conversation) => (
         <ConversationItem
           key={conversation.id}

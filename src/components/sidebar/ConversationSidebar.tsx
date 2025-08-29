@@ -1,14 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Plus, Settings, User, LogOut, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import { Plus, Folder, Settings, User, LogOut, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ConversationList } from './ConversationList';
 import { UserProfile } from './UserProfile';
 import { ModelSelector } from './ModelSelector';
+import { WorkspaceViewer } from '../workspace/WorkspaceViewer';
 import { useConversationStore } from '@/lib/stores/conversation-store';
 import { useSettingsStore } from '@/lib/stores/settings-store';
 
@@ -17,7 +18,11 @@ export function ConversationSidebar() {
   const { createConversation } = useConversationStore();
   const { selectedProvider, defaultModel } = useSettingsStore();
   const [showUserProfile, setShowUserProfile] = useState(false);
+  const [showWorkspace, setShowWorkspace] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [sidebarWidth, setSidebarWidth] = useState(320); // Default 320px (w-80)
+  const [isResizing, setIsResizing] = useState(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
   const handleNewProject = () => {
     createConversation({
@@ -28,9 +33,51 @@ export function ConversationSidebar() {
     });
   };
 
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsResizing(true);
+  }, []);
+
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (!isResizing) return;
+      
+      const newWidth = Math.max(280, Math.min(600, e.clientX)); // Min 280px, Max 600px
+      setSidebarWidth(newWidth);
+    },
+    [isResizing]
+  );
+
+  const handleMouseUp = useCallback(() => {
+    setIsResizing(false);
+  }, []);
+
+  useEffect(() => {
+    if (isResizing) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      document.body.style.cursor = 'col-resize';
+      document.body.style.userSelect = 'none';
+      
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+        document.body.style.cursor = '';
+        document.body.style.userSelect = '';
+      };
+    }
+  }, [isResizing, handleMouseMove, handleMouseUp]);
+
   return (
     <>
-      <div className={`relative h-full bg-background border-r transition-all duration-300 flex flex-col ${isCollapsed ? 'w-16' : 'w-64'}`}>
+      <div 
+        ref={sidebarRef}
+        className={`relative h-full bg-background border-r flex flex-col ${isCollapsed ? 'w-16' : ''}`}
+        style={{
+          width: isCollapsed ? '64px' : `${sidebarWidth}px`,
+          transition: isResizing ? 'none' : 'width 300ms ease-in-out'
+        }}
+      >
         {/* Header with Logo and Collapse Toggle */}
         <div className="p-4 border-b">
           <div className="flex items-center justify-between">
@@ -63,8 +110,8 @@ export function ConversationSidebar() {
           </div>
         </div>
 
-        {/* New Project Button */}
-        <div className="p-3">
+        {/* New Project and Workspace Buttons */}
+        <div className="p-3 space-y-2">
           <Button
             onClick={handleNewProject}
             className="w-full justify-start h-10"
@@ -72,6 +119,15 @@ export function ConversationSidebar() {
           >
             <Plus className="w-4 h-4" />
             {!isCollapsed && <span className="ml-2">New Project</span>}
+          </Button>
+          
+          <Button
+            onClick={() => setShowWorkspace(true)}
+            className="w-full justify-start h-10"
+            variant="outline"
+          >
+            <Folder className="w-4 h-4" />
+            {!isCollapsed && <span className="ml-2">Workspace</span>}
           </Button>
         </div>
 
@@ -111,11 +167,26 @@ export function ConversationSidebar() {
             {!isCollapsed && <span className="ml-2">Sign Out</span>}
           </Button>
         </div>
+        
+        {/* Resize Handle */}
+        {!isCollapsed && (
+          <div
+            className="absolute top-0 right-0 w-1 h-full cursor-col-resize hover:bg-primary/20 transition-colors group"
+            onMouseDown={handleMouseDown}
+          >
+            <div className="absolute top-1/2 right-0 w-1 h-8 bg-border group-hover:bg-primary/40 rounded-l transform -translate-y-1/2 transition-colors" />
+          </div>
+        )}
       </div>
 
       <UserProfile 
         isOpen={showUserProfile}
         onClose={() => setShowUserProfile(false)}
+      />
+      
+      <WorkspaceViewer
+        isOpen={showWorkspace}
+        onClose={() => setShowWorkspace(false)}
       />
     </>
   );
