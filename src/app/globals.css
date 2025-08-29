@@ -1,26 +1,124 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.625rem;
+  /* VS Code Dark Theme Colors */
+  --background: #1e1e1e; /* VS Code main background */
+  --foreground: #d4d4d4; /* VS Code main text */
+  --card: #252526; /* VS Code secondary background */
+  --card-foreground: #d4d4d4;
+  --popover: #2d2d30; /* VS Code menu background */
+  --popover-foreground: #cccccc;
+  --primary: #007acc; /* VS Code Blue */
+  --primary-foreground: #ffffff;
+  --secondary: #2d2d30; /* VS Code secondary */
+  --secondary-foreground: #cccccc;
+  --muted: #2d2d30;
+  --muted-foreground: #858585; /* VS Code muted text */
+  --accent: #094771; /* VS Code selection background */
+  --accent-foreground: #ffffff;
+  --destructive: #f14c4c; /* VS Code error color */
+  --border: #3e3e42; /* VS Code border color */
+  --input: #3c3c3c; /* VS Code input background */
+  --ring: #007acc; /* VS Code blue for focus rings */
+  --chart-1: #007acc;
+  --chart-2: #16a085;
+  --chart-3: #f39c12;
+  --chart-4: #e74c3c;
+  --chart-5: #9b59b6;
+  --sidebar: #252526; /* VS Code sidebar background */
+  --sidebar-foreground: #cccccc;
+  --sidebar-primary: #007acc;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #2a2d2e;
+  --sidebar-accent-foreground: #cccccc;
+  --sidebar-border: #3e3e42;
+  --sidebar-ring: #007acc;
+}
+
+.light {
+  /* Light theme - alternative */
+  --background: #ffffff;
+  --foreground: #3c3c3c;
+  --card: #ffffff;
+  --card-foreground: #3c3c3c;
+  --popover: #ffffff;
+  --popover-foreground: #3c3c3c;
+  --primary: #007acc; /* Keep VS Code blue */
+  --primary-foreground: #ffffff;
+  --secondary: #f3f3f3;
+  --secondary-foreground: #3c3c3c;
+  --muted: #f3f3f3;
+  --muted-foreground: #6c6c6c;
+  --accent: #f3f3f3;
+  --accent-foreground: #3c3c3c;
+  --destructive: #d13438;
+  --border: #e0e0e0;
+  --input: #ffffff;
+  --ring: #007acc;
+  --chart-1: #007acc;
+  --chart-2: #16a085;
+  --chart-3: #f39c12;
+  --chart-4: #e74c3c;
+  --chart-5: #9b59b6;
+  --sidebar: #f8f8f8;
+  --sidebar-foreground: #3c3c3c;
+  --sidebar-primary: #007acc;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f3f3f3;
+  --sidebar-accent-foreground: #3c3c3c;
+  --sidebar-border: #e0e0e0;
+  --sidebar-ring: #007acc;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-background text-foreground;
+  }
 }
