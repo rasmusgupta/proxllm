@@ -346,7 +346,7 @@ export default function AdminDashboard() {
                       <Select
                         value={user.status}
                         onValueChange={(value) =>
-                          updateUser(user.id, { status: value })
+                          updateUser(user.id, { status: value as User['status'] })
                         }
                       >
                         <SelectTrigger className="w-[120px]">
@@ -362,7 +362,7 @@ export default function AdminDashboard() {
                       <Select
                         value={user.role}
                         onValueChange={(value) =>
-                          updateUser(user.id, { role: value })
+                          updateUser(user.id, { role: value as User['role'] })
                         }
                       >
                         <SelectTrigger className="w-[100px]">
