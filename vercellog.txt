@@ -1,108 +1,94 @@
-[21:49:31.729] Running build in Washington, D.C., USA (East) – iad1
-[21:49:31.730] Build machine configuration: 2 cores, 8 GB
-[21:49:31.746] Cloning github.com/rasmusgupta/proxllm (Branch: master, Commit: 91e1518)
-[21:49:32.090] Cloning completed: 344.000ms
-[21:49:35.807] Restored build cache from previous deployment (9GhoTA6echvpUvY2gstSpThEqFXj)
-[21:49:36.578] Running "vercel build"
-[21:49:37.018] Vercel CLI 46.1.0
-[21:49:37.336] Running "install" command: `npm install && npx prisma generate`...
-[21:49:39.964] 
-[21:49:39.964] added 23 packages, and audited 520 packages in 2s
-[21:49:39.965] 
-[21:49:39.965] 161 packages are looking for funding
-[21:49:39.965]   run `npm fund` for details
-[21:49:39.976] 
-[21:49:39.976] 3 low severity vulnerabilities
-[21:49:39.977] 
-[21:49:39.977] To address all issues (including breaking changes), run:
-[21:49:39.977]   npm audit fix --force
-[21:49:39.977] 
-[21:49:39.977] Run `npm audit` for details.
-[21:49:41.820] Prisma schema loaded from prisma/schema.prisma
-[21:49:42.339] 
-[21:49:42.340] ✔ Generated Prisma Client (v6.15.0) to ./node_modules/@prisma/client in 325ms
-[21:49:42.340] 
-[21:49:42.340] Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
-[21:49:42.340] 
-[21:49:42.341] Tip: Want to turn off tips and other hints? https://pris.ly/tip-4-nohints
-[21:49:42.341] 
-[21:49:42.364] Detected Next.js version: 15.5.2
-[21:49:42.365] Running "npm run build"
-[21:49:42.481] 
-[21:49:42.482] > proxllm@0.1.0 build
-[21:49:42.482] > next build
-[21:49:42.482] 
-[21:49:43.523]    ▲ Next.js 15.5.2
-[21:49:43.524] 
-[21:49:43.610]    Creating an optimized production build ...
-[21:50:07.768]  ✓ Compiled successfully in 21.4s
-[21:50:07.773]    Linting and checking validity of types ...
-[21:50:14.338] 
-[21:50:14.338] Failed to compile.
-[21:50:14.338] 
-[21:50:14.338] ./src/app/admin/page.tsx
-[21:50:14.338] 49:11  Warning: 'user' is assigned a value but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.338] 110:6  Warning: React Hook useEffect has a missing dependency: 'checkAdminStatus'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
-[21:50:14.339] 116:6  Warning: React Hook useEffect has a missing dependency: 'fetchUsers'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
-[21:50:14.339] 118:54  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-[21:50:14.339] 138:36  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-[21:50:14.339] 306:25  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
-[21:50:14.339] 
-[21:50:14.339] ./src/app/api/admin/users/route.ts
-[21:50:14.339] 27:18  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-[21:50:14.339] 119:21  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-[21:50:14.340] 
-[21:50:14.340] ./src/app/api/llm/chat/route.ts
-[21:50:14.347] 17:40  Warning: 'temperature' is assigned a value but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.347] 17:53  Warning: 'maxTokens' is assigned a value but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.347] 
-[21:50:14.347] ./src/app/api/llm/chat-simple/route.ts
-[21:50:14.347] 10:40  Warning: 'temperature' is assigned a value but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.347] 10:53  Warning: 'maxTokens' is assigned a value but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.347] 
-[21:50:14.347] ./src/app/api/webhooks/clerk/route.ts
-[21:50:14.348] 23:9  Warning: 'body' is assigned a value but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.348] 28:12  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-[21:50:14.348] 36:11  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-[21:50:14.348] 
-[21:50:14.348] ./src/components/chat/ChatHeader.tsx
-[21:50:14.348] 14:9  Warning: 'router' is assigned a value but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.348] 26:6  Warning: React Hook useEffect has a missing dependency: 'currentConversation?.title'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
-[21:50:14.348] 
-[21:50:14.349] ./src/components/chat/EmptyState.tsx
-[21:50:14.349] 45:11  Warning: 'createConversation' is assigned a value but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.349] 
-[21:50:14.349] ./src/components/settings/ApiKeyManager.tsx
-[21:50:14.349] 6:29  Warning: 'CardHeader' is defined but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.349] 6:41  Warning: 'CardTitle' is defined but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.349] 6:52  Warning: 'CardDescription' is defined but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.349] 
-[21:50:14.350] ./src/components/sidebar/ConversationSidebar.tsx
-[21:50:14.350] 12:10  Warning: 'ModelSelector' is defined but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.350] 
-[21:50:14.350] ./src/components/sidebar/ModelSelector.tsx
-[21:50:14.350] 12:10  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.350] 23:10  Warning: 'isOpen' is assigned a value but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.350] 23:18  Warning: 'setIsOpen' is assigned a value but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.351] 27:9  Warning: 'currentModel' is assigned a value but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.351] 
-[21:50:14.351] ./src/components/sidebar/UserProfile.tsx
-[21:50:14.351] 13:10  Warning: 'formatDistanceToNow' is defined but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.351] 
-[21:50:14.356] ./src/components/workspace/WorkspaceViewer.tsx
-[21:50:14.357] 57:13  Warning: 'formData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.357] 
-[21:50:14.357] ./src/lib/auth/clerk.ts
-[21:50:14.357] 83:52  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
-[21:50:14.358] 
-[21:50:14.358] ./src/lib/llm-providers/anthropic.ts
-[21:50:14.358] 125:20  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.359] 
-[21:50:14.363] ./src/lib/llm-providers/openai.ts
-[21:50:14.363] 105:20  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.363] 
-[21:50:14.363] ./src/lib/stores/conversation-store.ts
-[21:50:14.363] 30:11  Warning: 'get' is defined but never used.  @typescript-eslint/no-unused-vars
-[21:50:14.364] 
-[21:50:14.364] info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
-[21:50:14.393] Error: Command "npm run build" exited with 1
+[21:58:53.543] Running build in Washington, D.C., USA (East) – iad1
+[21:58:53.544] Build machine configuration: 2 cores, 8 GB
+[21:58:53.596] Cloning github.com/rasmusgupta/proxllm (Branch: master, Commit: fd12b65)
+[21:58:54.008] Cloning completed: 412.000ms
+[21:58:57.343] Restored build cache from previous deployment (9GhoTA6echvpUvY2gstSpThEqFXj)
+[21:58:58.083] Running "vercel build"
+[21:58:58.549] Vercel CLI 46.1.0
+[21:58:58.932] Running "install" command: `npm install && npx prisma generate`...
+[21:59:01.788] 
+[21:59:01.789] added 23 packages, and audited 520 packages in 3s
+[21:59:01.789] 
+[21:59:01.790] 161 packages are looking for funding
+[21:59:01.790]   run `npm fund` for details
+[21:59:01.804] 
+[21:59:01.805] 3 low severity vulnerabilities
+[21:59:01.805] 
+[21:59:01.806] To address all issues (including breaking changes), run:
+[21:59:01.806]   npm audit fix --force
+[21:59:01.806] 
+[21:59:01.806] Run `npm audit` for details.
+[21:59:04.753] Prisma schema loaded from prisma/schema.prisma
+[21:59:05.126] 
+[21:59:05.127] ✔ Generated Prisma Client (v6.15.0) to ./node_modules/@prisma/client in 142ms
+[21:59:05.127] 
+[21:59:05.127] Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+[21:59:05.127] 
+[21:59:05.127] Tip: Want to turn off tips and other hints? https://pris.ly/tip-4-nohints
+[21:59:05.127] 
+[21:59:05.152] Detected Next.js version: 15.5.2
+[21:59:05.153] Running "npm run build"
+[21:59:05.269] 
+[21:59:05.269] > proxllm@0.1.0 build
+[21:59:05.269] > next build
+[21:59:05.269] 
+[21:59:06.359]    ▲ Next.js 15.5.2
+[21:59:06.360] 
+[21:59:06.446]    Creating an optimized production build ...
+[21:59:31.895]  ✓ Compiled successfully in 22.7s
+[21:59:31.899]    Linting and checking validity of types ...
+[21:59:39.189] 
+[21:59:39.189] Failed to compile.
+[21:59:39.190] 
+[21:59:39.190] ./src/app/admin/page.tsx
+[21:59:39.190] 103:6  Warning: React Hook useCallback has a missing dependency: 'pagination.limit'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[21:59:39.190] 
+[21:59:39.190] ./src/app/api/llm/chat/route.ts
+[21:59:39.190] 17:40  Warning: 'temperature' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.190] 17:53  Warning: 'maxTokens' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.190] 
+[21:59:39.190] ./src/app/api/llm/chat-simple/route.ts
+[21:59:39.190] 10:40  Warning: 'temperature' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.190] 10:53  Warning: 'maxTokens' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.191] 
+[21:59:39.191] ./src/app/api/webhooks/clerk/route.ts
+[21:59:39.191] 52:45  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+[21:59:39.191] 
+[21:59:39.191] ./src/components/chat/ChatHeader.tsx
+[21:59:39.191] 14:9  Warning: 'router' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.191] 26:6  Warning: React Hook useEffect has a missing dependency: 'currentConversation?.title'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+[21:59:39.191] 
+[21:59:39.191] ./src/components/chat/EmptyState.tsx
+[21:59:39.191] 45:11  Warning: 'createConversation' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.192] 
+[21:59:39.192] ./src/components/settings/ApiKeyManager.tsx
+[21:59:39.192] 6:29  Warning: 'CardHeader' is defined but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.192] 6:41  Warning: 'CardTitle' is defined but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.192] 6:52  Warning: 'CardDescription' is defined but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.192] 
+[21:59:39.192] ./src/components/sidebar/ConversationSidebar.tsx
+[21:59:39.192] 12:10  Warning: 'ModelSelector' is defined but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.192] 
+[21:59:39.192] ./src/components/sidebar/ModelSelector.tsx
+[21:59:39.192] 12:10  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.198] 23:10  Warning: 'isOpen' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.198] 23:18  Warning: 'setIsOpen' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.198] 27:9  Warning: 'currentModel' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.198] 
+[21:59:39.198] ./src/components/sidebar/UserProfile.tsx
+[21:59:39.198] 13:10  Warning: 'formatDistanceToNow' is defined but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.198] 
+[21:59:39.198] ./src/components/workspace/WorkspaceViewer.tsx
+[21:59:39.198] 57:13  Warning: 'formData' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.198] 
+[21:59:39.198] ./src/lib/llm-providers/anthropic.ts
+[21:59:39.198] 125:20  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.198] 
+[21:59:39.198] ./src/lib/llm-providers/openai.ts
+[21:59:39.198] 105:20  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.199] 
+[21:59:39.199] ./src/lib/stores/conversation-store.ts
+[21:59:39.199] 30:11  Warning: 'get' is defined but never used.  @typescript-eslint/no-unused-vars
+[21:59:39.199] 
+[21:59:39.200] info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
+[21:59:39.238] Error: Command "npm run build" exited with 1

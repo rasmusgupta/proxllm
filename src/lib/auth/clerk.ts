@@ -6,7 +6,7 @@ interface ClerkEmailAddress {
   email_address: string;
 }
 
-interface ClerkUserData {
+interface ClerkUserData extends Record<string, unknown> {
   id: string;
   email_addresses: ClerkEmailAddress[];
   first_name?: string;
@@ -92,12 +92,13 @@ export async function getUserByClerkId(clerkId: string): Promise<User | null> {
 /**
  * Sync user data from Clerk webhook
  */
-export async function syncUserFromClerk(clerkUser: ClerkUserData, eventType: string) {
+export async function syncUserFromClerk(clerkUser: Record<string, unknown>, eventType: string) {
   try {
+    const emailAddresses = clerkUser.email_addresses as ClerkEmailAddress[] | undefined;
     const userData = {
-      email: clerkUser.email_addresses?.[0]?.email_address || '',
-      name: `${clerkUser.first_name || ''} ${clerkUser.last_name || ''}`.trim(),
-      image: clerkUser.image_url,
+      email: emailAddresses?.[0]?.email_address || '',
+      name: `${clerkUser.first_name as string || ''} ${clerkUser.last_name as string || ''}`.trim(),
+      image: clerkUser.image_url as string,
       lastActiveAt: new Date(),
     };
 
@@ -105,7 +106,7 @@ export async function syncUserFromClerk(clerkUser: ClerkUserData, eventType: str
       case 'user.created':
         await prisma.user.create({
           data: {
-            clerkId: clerkUser.id,
+            clerkId: clerkUser.id as string,
             role: 'USER',
             status: 'ACTIVE',
             plan: 'FREE',
@@ -117,9 +118,9 @@ export async function syncUserFromClerk(clerkUser: ClerkUserData, eventType: str
 
       case 'user.updated':
         await prisma.user.upsert({
-          where: { clerkId: clerkUser.id },
+          where: { clerkId: clerkUser.id as string },
           create: {
-            clerkId: clerkUser.id,
+            clerkId: clerkUser.id as string,
             role: 'USER',
             status: 'ACTIVE',
             plan: 'FREE',
@@ -132,7 +133,7 @@ export async function syncUserFromClerk(clerkUser: ClerkUserData, eventType: str
 
       case 'user.deleted':
         await prisma.user.delete({
-          where: { clerkId: clerkUser.id }
+          where: { clerkId: clerkUser.id as string }
         });
         break;
 

@@ -100,7 +100,7 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false);
     }
-  }, [search, statusFilter, roleFilter, pagination.page]);
+  }, [search, statusFilter, roleFilter, pagination.page, pagination.limit]);
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
