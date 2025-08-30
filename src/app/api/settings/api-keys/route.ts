@@ -72,17 +72,26 @@ export async function POST(request: NextRequest) {
     try {
       const llmProvider = createLLMProvider(provider, apiKey);
       
+      // Use a reliable model for testing based on provider
+      let testModel = llmProvider.getAvailableModels()[0];
+      if (provider === 'anthropic') {
+        testModel = 'claude-3-5-haiku-20241022'; // Use Haiku for faster/cheaper testing
+      } else if (provider === 'openai') {
+        testModel = 'gpt-3.5-turbo'; // Use cheaper model for testing
+      }
+      
       // Simple test request to validate the key
       await llmProvider.chat({
-        messages: [{ role: 'user', content: 'Hi' }],
-        model: llmProvider.getAvailableModels()[0],
+        messages: [{ role: 'user', content: 'Test' }],
+        model: testModel,
         provider,
-        maxTokens: 10,
+        maxTokens: 5,
+        temperature: 0,
       });
       
       isValid = true;
     } catch (error) {
-      console.log('API key validation failed:', error);
+      console.error('API key validation failed:', error);
       isValid = false;
     }
 

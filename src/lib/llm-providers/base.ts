@@ -43,8 +43,14 @@ export abstract class BaseLLMProvider {
     });
 
     if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`API request failed: ${response.status} - ${error}`);
+      let errorMessage = '';
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.error?.message || errorData.message || JSON.stringify(errorData);
+      } catch {
+        errorMessage = await response.text();
+      }
+      throw new Error(`API request failed: ${response.status} - ${errorMessage}`);
     }
 
     return response;

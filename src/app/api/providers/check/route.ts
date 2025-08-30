@@ -1,12 +1,39 @@
 import { NextResponse } from 'next/server';
+import { auth } from '@/lib/auth/auth';
+import { prisma } from '@/lib/database/prisma';
 
 export async function GET() {
   try {
-    // Check which providers have API keys configured
+    const session = await auth();
+    
+    if (!session?.user?.id) {
+      // If not authenticated, check environment variables as fallback
+      const availability = {
+        anthropic: !!process.env.ANTHROPIC_API_KEY,
+        openai: !!process.env.OPENAI_API_KEY,
+        google: !!process.env.GOOGLE_API_KEY,
+      };
+      return NextResponse.json(availability);
+    }
+
+    // Get user's valid API keys from database
+    const userApiKeys = await prisma.apiKey.findMany({
+      where: {
+        userId: session.user.id,
+        isValid: true,
+      },
+      select: {
+        provider: true,
+      },
+    });
+
+    // Create availability map based on user's API keys
+    const userProviders = new Set(userApiKeys.map(key => key.provider));
+    
     const availability = {
-      anthropic: !!process.env.ANTHROPIC_API_KEY,
-      openai: !!process.env.OPENAI_API_KEY,
-      google: !!process.env.GOOGLE_API_KEY,
+      anthropic: userProviders.has('anthropic') || !!process.env.ANTHROPIC_API_KEY,
+      openai: userProviders.has('openai') || !!process.env.OPENAI_API_KEY,
+      google: userProviders.has('google') || !!process.env.GOOGLE_API_KEY,
     };
 
     return NextResponse.json(availability);
