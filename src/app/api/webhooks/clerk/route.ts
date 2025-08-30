@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
       case 'user.updated':
       case 'user.deleted':
         await syncUserFromClerk(evt.data as Record<string, unknown>, eventType);
-        console.log(`Successfully handled ${eventType} for user ${evt.data.id}`);
+        console.log(`Successfully handled ${eventType} for user ${(evt.data as any).id}`);
         break;
         
       default:
