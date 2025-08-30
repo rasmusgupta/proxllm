@@ -3,6 +3,7 @@
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { ConversationSidebar } from '@/components/sidebar/ConversationSidebar';
 import { ChatArea } from './ChatArea';
+import { ResizableCanvasPanel } from '@/components/canvas/ResizableCanvasPanel';
 import { useSettingsStore } from '@/lib/stores/settings-store';
 
 export default function ChatInterface() {
@@ -12,8 +13,11 @@ export default function ChatInterface() {
     <SidebarProvider defaultOpen={!sidebarCollapsed}>
       <div className="flex h-screen w-full">
         <ConversationSidebar />
-        <main className="flex-1 flex flex-col">
-          <ChatArea />
+        <main className="flex-1 flex">
+          <div className="flex-1 flex flex-col">
+            <ChatArea />
+          </div>
+          <ResizableCanvasPanel />
         </main>
       </div>
     </SidebarProvider>

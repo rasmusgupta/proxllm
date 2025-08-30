@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev)",
+      "Read(C:\\dev/**)",
+      "Read(C:\\dev\\proxcanvas/**)",
+      "Read(C:\\dev\\proxcanvas\\src/**)",
+      "Read(C:\\dev\\proxcanvas\\debug/**)",
+      "Read(C:\\dev\\proxcanvas\\debug/**)",
+      "Bash(xcopy /Y \"C:\\dev\\proxcanvas\\debug\\proxcanvas\\proxcanvas.js\" \"C:\\dev\\proxllm\\public\\proxcanvas\"\")",
+      "Read(C:\\dev\\proxcanvas\\debug/**)",
+      "Read(C:\\dev\\proxcanvas\\src/**)",
+      "Read(C:\\dev\\proxcanvas\\src\\kicanvas\\elements/**)",
+      "Read(C:\\dev\\proxcanvas\\debug/**)",
+      "Read(C:\\dev\\proxcanvas\\src\\kicanvas\\elements/**)",
+      "Read(C:\\dev\\proxcanvas\\src\\kc-ui/**)",
+      "Read(C:\\dev\\proxcanvas\\src\\kc-ui/**)",
+      "Read(C:\\dev\\proxcanvas\\src\\kc-ui/**)",
+      "Read(C:\\dev\\proxcanvas\\src\\kc-ui/**)",
+      "Read(C:\\dev\\proxcanvas\\src\\kicanvas\\elements/**)",
+      "Read(C:\\dev\\proxcanvas\\src\\kicanvas\\elements/**)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
