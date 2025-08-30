@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { demoApiKeys } from '@/lib/demo-storage';
+import { encrypt } from '@/lib/crypto/encryption';
 import type { DemoApiKey } from '@/lib/demo-storage';
 
 export async function GET() {
@@ -46,10 +47,14 @@ export async function POST(request: NextRequest) {
       key => key.provider === provider && key.keyName === keyName
     );
 
+    // Encrypt the API key for storage
+    const encryptedApiKey = encrypt(apiKey);
+
     const newKey: DemoApiKey = {
       id: existingIndex >= 0 ? demoApiKeys[existingIndex].id : `demo-${Date.now()}`,
       provider,
       keyName,
+      encryptedApiKey,
       isValid,
       createdAt: existingIndex >= 0 ? demoApiKeys[existingIndex].createdAt : new Date().toISOString(),
     };

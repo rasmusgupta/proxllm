@@ -8,10 +8,10 @@ import { useSettingsStore } from '@/lib/stores/settings-store';
 // import { useSession } from 'next-auth/react';
 
 const EXAMPLE_PROMPTS = [
-  "Design a simple LED circuit with current limiting resistor",
-  "Create a microcontroller-based temperature sensor PCB",
-  "Help me route high-speed signals on a 4-layer PCB",
-  "Generate footprint for custom connector component"
+  "I want to measure temperature",
+  "I want to measure position",
+  "I want to measure humidity",
+  "I want to measure acceleration"
 ];
 
 const FEATURES = [

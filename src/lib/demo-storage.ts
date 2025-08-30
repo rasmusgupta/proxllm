@@ -25,6 +25,7 @@ export interface DemoApiKey {
   id: string;
   provider: string;
   keyName: string;
+  encryptedApiKey: string;
   isValid: boolean;
   createdAt: string;
 }
@@ -40,3 +41,8 @@ export const demoStorage = {
 export const demoConversations = demoStorage.conversations;
 export const demoMessages = demoStorage.messages;
 export const demoApiKeys = demoStorage.apiKeys;
+
+// Helper function to get API key for a provider
+export function getDemoApiKey(provider: string): DemoApiKey | undefined {
+  return demoApiKeys.find(key => key.provider === provider && key.isValid);
+}

@@ -1,41 +1,49 @@
 import crypto from 'crypto';
 
-const ALGORITHM = 'aes-256-gcm';
-const KEY = process.env.ENCRYPTION_KEY || 'default-key-please-change-in-production';
+const ALGORITHM = 'aes-256-cbc';
+const KEY = process.env.ENCRYPTION_KEY || 'default-32-char-key-change-me!!!!';
 
-if (KEY.length !== 32) {
-  throw new Error('ENCRYPTION_KEY must be exactly 32 characters long');
-}
+// Ensure key is exactly 32 bytes by hashing if necessary
+const keyBuffer = KEY.length === 32 ? Buffer.from(KEY, 'utf8') : crypto.createHash('sha256').update(KEY).digest();
 
 export function encrypt(text: string): string {
-  const iv = crypto.randomBytes(16);
-  const cipher = crypto.createCipher(ALGORITHM, KEY);
-  cipher.setAAD(iv);
-  
-  let encrypted = cipher.update(text, 'utf8', 'hex');
-  encrypted += cipher.final('hex');
-  
-  const authTag = cipher.getAuthTag();
-  
-  return `${iv.toString('hex')}:${authTag.toString('hex')}:${encrypted}`;
+  try {
+    // Generate a random 16-byte IV for AES-256-CBC
+    const iv = crypto.randomBytes(16);
+    
+    // Create cipher
+    const cipher = crypto.createCipheriv(ALGORITHM, keyBuffer, iv);
+    
+    // Encrypt the text
+    let encrypted = cipher.update(text, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    
+    // Return IV:encrypted format
+    return `${iv.toString('hex')}:${encrypted}`;
+  } catch (error) {
+    throw new Error(`Encryption failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
 }
 
 export function decrypt(encryptedText: string): string {
-  const parts = encryptedText.split(':');
-  if (parts.length !== 3) {
-    throw new Error('Invalid encrypted text format');
+  try {
+    const parts = encryptedText.split(':');
+    if (parts.length !== 2) {
+      throw new Error('Invalid encrypted text format');
+    }
+    
+    const [ivHex, encrypted] = parts;
+    const iv = Buffer.from(ivHex, 'hex');
+    
+    // Create decipher
+    const decipher = crypto.createDecipheriv(ALGORITHM, keyBuffer, iv);
+    
+    // Decrypt the text
+    let decrypted = decipher.update(encrypted, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    
+    return decrypted;
+  } catch (error) {
+    throw new Error(`Decryption failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
-  
-  const [ivHex, authTagHex, encrypted] = parts;
-  const iv = Buffer.from(ivHex, 'hex');
-  const authTag = Buffer.from(authTagHex, 'hex');
-  
-  const decipher = crypto.createDecipher(ALGORITHM, KEY);
-  decipher.setAAD(iv);
-  decipher.setAuthTag(authTag);
-  
-  let decrypted = decipher.update(encrypted, 'hex', 'utf8');
-  decrypted += decipher.final('utf8');
-  
-  return decrypted;
 }

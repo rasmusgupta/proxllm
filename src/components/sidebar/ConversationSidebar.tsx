@@ -72,8 +72,9 @@ export function ConversationSidebar() {
     <>
       <div 
         ref={sidebarRef}
-        className={`relative h-full bg-background border-r flex flex-col ${isCollapsed ? 'w-16' : ''}`}
+        className={`relative h-full border-r flex flex-col ${isCollapsed ? 'w-16' : ''}`}
         style={{
+          backgroundColor: '#181818', // Darker than main background
           width: isCollapsed ? '64px' : `${sidebarWidth}px`,
           transition: isResizing ? 'none' : 'width 300ms ease-in-out'
         }}
@@ -139,7 +140,7 @@ export function ConversationSidebar() {
         </div>
 
         {/* Footer with User Profile and Settings - Always at bottom */}
-        <div className="mt-auto p-3 border-t space-y-1 bg-background">
+        <div className="mt-auto p-3 border-t space-y-1" style={{ backgroundColor: '#181818' }}>
           <Button
             onClick={() => router.push('/settings')}
             variant="ghost"

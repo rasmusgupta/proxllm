@@ -54,14 +54,15 @@ export function ResizableCanvasPanel() {
   return (
     <div 
       ref={panelRef}
-      className={`relative h-full bg-background border-l flex flex-col ${isCollapsed ? 'w-16' : ''}`}
+      className={`relative h-full border-l flex flex-col ${isCollapsed ? 'w-16' : ''}`}
       style={{
+        backgroundColor: '#181818', // Darker than main background
         width: isCollapsed ? '64px' : `${panelWidth}px`,
         transition: isResizing ? 'none' : 'width 300ms ease-in-out'
       }}
     >
       {/* Header with PCB View title and Collapse Toggle */}
-      <div className="flex items-center justify-between p-4 border-b bg-background">
+      <div className="flex items-center justify-between p-4 border-b" style={{ backgroundColor: '#181818' }}>
         <Button
           onClick={() => setIsCollapsed(!isCollapsed)}
           variant="ghost"
@@ -79,7 +80,12 @@ export function ResizableCanvasPanel() {
           PCB View
         </h2>
         
-        <div className="w-8"></div> {/* Spacer to center the title */}
+        <Button
+          className={`bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-6 py-2 h-10 ${isCollapsed ? 'hidden' : ''}`}
+          size="default"
+        >
+          Order
+        </Button>
       </div>
 
       {/* Canvas Content */}
