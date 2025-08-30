@@ -30,7 +30,7 @@ A modern web-based LLM chat platform with Claude AI-inspired UI and support for 
 - PostgreSQL database
 - API keys from LLM providers (OpenAI, Anthropic, etc.)
 
-### Installation
+### Local Development
 
 1. **Install dependencies**
    ```bash
@@ -39,7 +39,7 @@ A modern web-based LLM chat platform with Claude AI-inspired UI and support for 
 
 2. **Set up environment variables**
    
-   Edit `.env.local` with your configuration:
+   Copy `.env.example` to `.env.local` and edit with your configuration:
    ```env
    # Database
    DATABASE_URL="postgresql://username:password@localhost:5432/proxllm"
@@ -71,6 +71,37 @@ A modern web-based LLM chat platform with Claude AI-inspired UI and support for 
    ```
 
    Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Deployment on Vercel
+
+1. **Fork/clone this repository**
+
+2. **Create a new Vercel project**
+   - Import your GitHub repository
+   - Vercel will automatically detect it's a Next.js project
+
+3. **Set up Vercel Postgres**
+   - In your Vercel project dashboard, go to Storage → Create Database
+   - Choose Postgres and create a new database
+   - Copy the `DATABASE_URL` from the `.env.local` tab
+
+4. **Configure environment variables in Vercel**
+   ```env
+   DATABASE_URL="postgresql://..." (from Vercel Postgres)
+   NEXTAUTH_URL="https://your-app.vercel.app"
+   NEXTAUTH_SECRET="generate-a-random-secret-key"
+   ENCRYPTION_KEY="exactly-32-characters-for-aes-key!"
+   ```
+
+5. **Deploy**
+   - Vercel will automatically build and deploy your application
+   - The database schema will be automatically generated during build
+
+6. **Set up database (first deployment only)**
+   ```bash
+   # Run this locally after first deployment
+   npx prisma db push
+   ```
 
 ## Usage
 
