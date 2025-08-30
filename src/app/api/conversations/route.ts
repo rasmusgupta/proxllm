@@ -1,18 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/lib/auth/auth';
+import { getCurrentUser } from '@/lib/auth/clerk';
 import { prisma } from '@/lib/database/prisma';
 
 export async function GET() {
   try {
-    const session = await auth();
+    const user = await getCurrentUser();
     
-    if (!session?.user?.id) {
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const conversations = await prisma.conversation.findMany({
       where: {
-        userId: session.user.id,
+        userId: user.id,
       },
       orderBy: {
         updatedAt: 'desc',
@@ -38,9 +38,9 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await auth();
+    const user = await getCurrentUser();
     
-    if (!session?.user?.id) {
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
         title,
         modelProvider,
         modelName,
-        userId: session.user.id,
+        userId: user.id,
       },
     });
 

@@ -45,20 +45,47 @@ model Session {
 
 model User {
   id            String    @id @default(cuid())
+  clerkId       String?   @unique // Clerk user ID for new users
   name          String?
   email         String    @unique
   emailVerified DateTime?
   image         String?
+  role          UserRole  @default(USER)
+  status        UserStatus @default(ACTIVE)
+  plan          UserPlan   @default(FREE)
+  tokensUsed    Int        @default(0)
+  monthlyLimit  Int?       
+  lastActiveAt  DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
+  // Keep NextAuth relations for migration period
   accounts      Account[]
   sessions      Session[]
+  
+  // Main relations
   conversations Conversation[]
   apiKeys       ApiKey[]
   preferences   UserPreferences?
 
   @@map("users")
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  BANNED
+}
+
+enum UserPlan {
+  FREE
+  PRO
+  ENTERPRISE
 }
 
 model VerificationToken {

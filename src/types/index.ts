@@ -1,8 +1,15 @@
 export interface User {
   id: string;
+  clerkId?: string;
   email: string;
   name: string;
   image?: string;
+  role: 'ADMIN' | 'USER';
+  status: 'ACTIVE' | 'SUSPENDED' | 'BANNED';
+  plan: 'FREE' | 'PRO' | 'ENTERPRISE';
+  tokensUsed: number;
+  monthlyLimit?: number;
+  lastActiveAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }

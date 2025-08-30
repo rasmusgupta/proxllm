@@ -6,7 +6,11 @@
       "Bash(git commit:*)",
       "Bash(git push:*)",
       "Bash(npm run build:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(npm install:*)",
+      "Bash(npx prisma generate:*)",
+      "Bash(npx prisma:*)",
+      "Bash(DATABASE_URL=\"postgresql://postgres.gimvpciifkhefqbubrgq:LgFgBxSAX8Jc9m69@aws-1-ap-southeast-2.pooler.supabase.com:5432/postgres?sslmode=require\" npx prisma db push)"
     ],
     "deny": [],
     "ask": []

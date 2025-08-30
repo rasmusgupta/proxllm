@@ -4,6 +4,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Plus, Folder, Settings, User, LogOut, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import Image from 'next/image';
+import { useUser, useClerk } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ConversationList } from './ConversationList';
@@ -15,6 +16,8 @@ import { useSettingsStore } from '@/lib/stores/settings-store';
 
 export function ConversationSidebar() {
   const router = useRouter();
+  const { user } = useUser();
+  const { signOut } = useClerk();
   const { createConversation } = useConversationStore();
   const { selectedProvider, defaultModel } = useSettingsStore();
   const [showUserProfile, setShowUserProfile] = useState(false);
@@ -25,8 +28,10 @@ export function ConversationSidebar() {
   const sidebarRef = useRef<HTMLDivElement>(null);
 
   const handleNewProject = () => {
+    if (!user?.id) return;
+    
     createConversation({
-      userId: 'demo-user',
+      userId: user.id,
       title: 'New Project',
       modelProvider: selectedProvider,
       modelName: defaultModel,
@@ -156,11 +161,15 @@ export function ConversationSidebar() {
             className="w-full justify-start h-10"
           >
             <User className="w-4 h-4" />
-            {!isCollapsed && <span className="ml-2">Demo User</span>}
+            {!isCollapsed && (
+              <span className="ml-2">
+                {user?.firstName || user?.emailAddresses?.[0]?.emailAddress || 'User'}
+              </span>
+            )}
           </Button>
           
           <Button
-            onClick={() => console.log('Sign out clicked')}
+            onClick={() => signOut()}
             variant="ghost"
             className="w-full justify-start h-10 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950"
           >

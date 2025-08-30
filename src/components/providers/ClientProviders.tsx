@@ -1,5 +1,6 @@
 'use client';
 
+import { ClerkProvider } from '@clerk/nextjs';
 import { Toaster } from 'sonner';
 
 interface ClientProvidersProps {
@@ -8,9 +9,9 @@ interface ClientProvidersProps {
 
 export function ClientProviders({ children }: ClientProvidersProps) {
   return (
-    <>
+    <ClerkProvider>
       {children}
       <Toaster position="top-right" />
-    </>
+    </ClerkProvider>
   );
 }

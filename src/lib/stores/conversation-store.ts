@@ -64,7 +64,7 @@ export const useConversationStore = create<ConversationState & ConversationActio
 
       createConversation: async (conversationData) => {
         try {
-          const response = await fetch('/api/conversations/demo', {
+          const response = await fetch('/api/conversations', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(conversationData),
@@ -99,7 +99,7 @@ export const useConversationStore = create<ConversationState & ConversationActio
       loadConversations: async () => {
         try {
           set({ isLoading: true });
-          const response = await fetch('/api/conversations/demo');
+          const response = await fetch('/api/conversations');
           
           if (response.ok) {
             const conversations = await response.json();
