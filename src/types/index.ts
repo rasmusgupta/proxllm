@@ -1,17 +1,18 @@
 export interface User {
   id: string;
-  clerkId?: string;
+  clerkId: string | null;
   email: string;
-  name: string;
-  image?: string;
+  name: string | null;
+  image?: string | null;
   role: 'ADMIN' | 'USER';
   status: 'ACTIVE' | 'SUSPENDED' | 'BANNED';
   plan: 'FREE' | 'PRO' | 'ENTERPRISE';
   tokensUsed: number;
-  monthlyLimit?: number;
-  lastActiveAt?: Date;
+  monthlyLimit?: number | null;
+  lastActiveAt?: Date | null;
   createdAt: Date;
   updatedAt: Date;
+  emailVerified?: Date | null;
 }
 
 export interface Conversation {

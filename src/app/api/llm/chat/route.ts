@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body: ChatRequest = await request.json();
-    const { messages, model, provider, temperature, maxTokens, stream } = body;
+    const { messages, model, provider, stream } = body;
 
     if (!messages || !model || !provider) {
       return NextResponse.json(

@@ -9,7 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
 import { useSettingsStore } from '@/lib/stores/settings-store';
 import { PROVIDERS, checkProviderAvailability } from '@/lib/provider-utils';
 import type { LLMProvider } from '@/types';
@@ -20,11 +19,9 @@ interface ModelSelectorProps {
 
 export function ModelSelector({ isCollapsed = false }: ModelSelectorProps) {
   const { selectedProvider, defaultModel, setSelectedProvider, setDefaultModel } = useSettingsStore();
-  const [isOpen, setIsOpen] = useState(false);
   const [providerAvailability, setProviderAvailability] = useState<Record<string, boolean>>({});
 
   const currentProvider = PROVIDERS.find(p => p.id === selectedProvider);
-  const currentModel = currentProvider?.models.find(m => m.id === defaultModel);
 
   useEffect(() => {
     checkProviderAvailability().then(setProviderAvailability);

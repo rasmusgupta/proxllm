@@ -6,20 +6,13 @@ interface ClerkEmailAddress {
   email_address: string;
 }
 
-interface ClerkUserData extends Record<string, unknown> {
-  id: string;
-  email_addresses: ClerkEmailAddress[];
-  first_name?: string;
-  last_name?: string;
-  image_url?: string;
-}
 
 /**
  * Get the current authenticated user from Clerk and sync with database
  */
 export async function getCurrentUser(): Promise<User | null> {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
     
     if (!userId) {
       return null;

@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ConversationList } from './ConversationList';
 import { UserProfile } from './UserProfile';
-import { ModelSelector } from './ModelSelector';
 import { WorkspaceViewer } from '../workspace/WorkspaceViewer';
 import { useConversationStore } from '@/lib/stores/conversation-store';
 import { useSettingsStore } from '@/lib/stores/settings-store';

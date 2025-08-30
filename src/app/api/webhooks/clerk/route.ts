@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Handle the webhook
-  const eventType = evt.type;
+  const eventType = evt.type as string;
   
   try {
     switch (eventType) {
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
       case 'user.updated':
       case 'user.deleted':
         await syncUserFromClerk(evt.data as Record<string, unknown>, eventType);
-        console.log(`Successfully handled ${eventType} for user ${(evt.data as any).id}`);
+        console.log(`Successfully handled ${eventType} for user ${(evt.data as Record<string, unknown>).id}`);
         break;
         
       default:
