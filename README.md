@@ -77,31 +77,44 @@ A modern web-based LLM chat platform with Claude AI-inspired UI and support for 
 1. **Fork/clone this repository**
 
 2. **Create a new Vercel project**
+   - Go to [vercel.com](https://vercel.com) and click "New Project"
    - Import your GitHub repository
    - Vercel will automatically detect it's a Next.js project
 
-3. **Set up Vercel Postgres**
-   - In your Vercel project dashboard, go to Storage → Create Database
-   - Choose Postgres and create a new database
-   - Copy the `DATABASE_URL` from the `.env.local` tab
+3. **Set up Vercel Postgres (before first deployment)**
+   - In your Vercel project dashboard, go to **Storage** tab
+   - Click **Create Database** → **Postgres**
+   - Choose a database name and region
+   - Click **Create**
+   - Go to the `.env.local` tab in the database dashboard
+   - Copy the `POSTGRES_URL` value (this will be your `DATABASE_URL`)
 
-4. **Configure environment variables in Vercel**
-   ```env
-   DATABASE_URL="postgresql://..." (from Vercel Postgres)
-   NEXTAUTH_URL="https://your-app.vercel.app"
-   NEXTAUTH_SECRET="generate-a-random-secret-key"
-   ENCRYPTION_KEY="exactly-32-characters-for-aes-key!"
-   ```
+4. **Configure environment variables**
+   - In your Vercel project, go to **Settings** → **Environment Variables**
+   - Add the following variables one by one:
+   
+   | Name | Value | Notes |
+   |------|-------|-------|
+   | `DATABASE_URL` | `postgresql://...` | From Vercel Postgres `.env.local` tab |
+   | `NEXTAUTH_URL` | `https://your-app.vercel.app` | Your actual Vercel app URL |
+   | `NEXTAUTH_SECRET` | `random-secret-here` | Generate a random 32+ character string |
+   | `ENCRYPTION_KEY` | `exactly-32-characters-for-aes-key!` | Must be exactly 32 characters |
 
 5. **Deploy**
-   - Vercel will automatically build and deploy your application
-   - The database schema will be automatically generated during build
+   - Click **Deploy** or push to your main branch
+   - Vercel will automatically build and deploy
+   - The Prisma client will be generated during build
+   - Database schema will be created automatically
 
-6. **Set up database (first deployment only)**
-   ```bash
-   # Run this locally after first deployment
-   npx prisma db push
-   ```
+6. **Verify deployment**
+   - Visit your deployed app URL
+   - The app should load successfully
+   - Database tables will be created on first API call
+
+**Troubleshooting:**
+- If deployment fails with database errors, ensure `DATABASE_URL` is correctly set
+- If NextAuth errors occur, verify `NEXTAUTH_URL` matches your actual app URL
+- For encryption errors, ensure `ENCRYPTION_KEY` is exactly 32 characters
 
 ## Usage
 
