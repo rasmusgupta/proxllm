@@ -64,10 +64,21 @@ export default function AdminDashboard() {
 
   const checkAdminStatus = useCallback(async () => {
     try {
+      console.log('[Admin] Checking admin status...');
       const response = await fetch('/api/admin/users');
-      setIsAdmin(response.ok);
-      if (!response.ok && response.status === 403) {
-        router.push('/');
+      console.log('[Admin] Response status:', response.status);
+      
+      if (response.ok) {
+        console.log('[Admin] Admin access granted');
+        setIsAdmin(true);
+      } else {
+        console.log('[Admin] Admin access denied, status:', response.status);
+        const errorData = await response.text();
+        console.log('[Admin] Error response:', errorData);
+        setIsAdmin(false);
+        if (response.status === 403) {
+          router.push('/');
+        }
       }
     } catch (error) {
       console.error('Error checking admin status:', error);

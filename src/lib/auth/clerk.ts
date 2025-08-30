@@ -13,8 +13,10 @@ interface ClerkEmailAddress {
 export async function getCurrentUser(): Promise<User | null> {
   try {
     const { userId } = await auth();
+    console.log('[getCurrentUser] Clerk userId:', userId);
     
     if (!userId) {
+      console.log('[getCurrentUser] No userId from auth()');
       return null;
     }
 
@@ -22,15 +24,19 @@ export async function getCurrentUser(): Promise<User | null> {
     let dbUser = await prisma.user.findUnique({
       where: { clerkId: userId }
     });
+    console.log('[getCurrentUser] Found dbUser:', dbUser ? { id: dbUser.id, email: dbUser.email, role: dbUser.role } : 'null');
 
     // If user doesn't exist, create from Clerk data
     if (!dbUser) {
+      console.log('[getCurrentUser] User not found, creating new user');
       const clerkUser = await currentUser();
       
       if (!clerkUser) {
+        console.log('[getCurrentUser] No clerkUser from currentUser()');
         return null;
       }
 
+      console.log('[getCurrentUser] Creating user with email:', clerkUser.emailAddresses[0]?.emailAddress);
       dbUser = await prisma.user.create({
         data: {
           clerkId: userId,
@@ -44,6 +50,7 @@ export async function getCurrentUser(): Promise<User | null> {
           lastActiveAt: new Date(),
         }
       });
+      console.log('[getCurrentUser] Created new user:', { id: dbUser.id, email: dbUser.email, role: dbUser.role });
     }
 
     // Update last active time
@@ -64,7 +71,10 @@ export async function getCurrentUser(): Promise<User | null> {
  */
 export async function isCurrentUserAdmin(): Promise<boolean> {
   const user = await getCurrentUser();
-  return user?.role === 'ADMIN';
+  const isAdmin = user?.role === 'ADMIN';
+  console.log('[isCurrentUserAdmin] User:', user ? { id: user.id, email: user.email, role: user.role } : 'null');
+  console.log('[isCurrentUserAdmin] Is admin:', isAdmin);
+  return isAdmin;
 }
 
 /**
