@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { demoConversations, demoMessages } from '@/lib/demo-storage';
-import type { DemoConversation } from '@/lib/demo-storage';
 
 export async function GET(
   request: NextRequest,

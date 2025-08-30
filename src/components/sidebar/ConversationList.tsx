@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import { Cpu, MoreHorizontal, Trash2, Edit3, Check, X, Star } from 'lucide-react';
+import { Cpu, MoreHorizontal, Trash2, Edit3, Check, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -23,7 +23,7 @@ interface ConversationItemProps {
 }
 
 function ConversationItem({ conversation, isActive, onClick, isCollapsed = false }: ConversationItemProps) {
-  const { deleteConversation, updateConversation, toggleStarConversation } = useConversationStore();
+  const { deleteConversation, updateConversation } = useConversationStore();
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState(conversation.title);
 
@@ -71,9 +71,6 @@ function ConversationItem({ conversation, isActive, onClick, isCollapsed = false
     }
   };
 
-  const handleToggleStar = () => {
-    toggleStarConversation(conversation.id);
-  };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
@@ -94,9 +91,6 @@ function ConversationItem({ conversation, isActive, onClick, isCollapsed = false
     >
       <div className="flex items-center gap-1 shrink-0">
         <Cpu className={cn("w-4 h-4 text-muted-foreground", isCollapsed && "w-5 h-5")} />
-        {conversation.isStarred && (
-          <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-        )}
       </div>
       
       {!isCollapsed && (
@@ -155,13 +149,6 @@ function ConversationItem({ conversation, isActive, onClick, isCollapsed = false
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={handleToggleStar}>
-              <Star className={cn(
-                "w-4 h-4 mr-2", 
-                conversation.isStarred ? "fill-yellow-400 text-yellow-400" : ""
-              )} />
-              {conversation.isStarred ? 'Unstar' : 'Star'}
-            </DropdownMenuItem>
             <DropdownMenuItem onClick={handleEdit}>
               <Edit3 className="w-4 h-4 mr-2" />
               Rename

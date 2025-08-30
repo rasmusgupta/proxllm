@@ -12,6 +12,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useSettingsStore } from '@/lib/stores/settings-store';
 import { PROVIDERS, checkProviderAvailability } from '@/lib/provider-utils';
+import type { LLMProvider } from '@/types';
 
 interface ModelSelectorProps {
   isCollapsed?: boolean;
@@ -32,7 +33,7 @@ export function ModelSelector({ isCollapsed = false }: ModelSelectorProps) {
   const handleProviderChange = (providerId: string) => {
     const provider = PROVIDERS.find(p => p.id === providerId);
     if (provider) {
-      setSelectedProvider(providerId as any);
+      setSelectedProvider(providerId as LLMProvider);
       // Set first model as default when switching providers
       if (provider.models.length > 0) {
         setDefaultModel(provider.models[0].id);

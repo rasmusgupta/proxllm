@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import Script from 'next/script';
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       'kc-proxcanvas-shell': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
@@ -672,6 +673,8 @@ export function ProxCanvas() {
         type="module"
       />
       
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-ignore */}
       <kc-proxcanvas-shell 
         id="proxcanvas" 
         style={{ 

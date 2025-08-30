@@ -9,7 +9,8 @@ const nextAuth = NextAuth({
   callbacks: {
     async session({ token, session }) {
       if (token.sub && session.user) {
-        session.user.id = token.sub;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (session.user as any).id = token.sub;
       }
       return session;
     },

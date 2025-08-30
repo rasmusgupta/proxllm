@@ -57,7 +57,7 @@ export abstract class BaseLLMProvider {
     return Math.ceil(text.length / 4);
   }
 
-  protected formatMessages(messages: Array<{role: string; content: string}>): any[] {
+  protected formatMessages(messages: Array<{role: string; content: string}>): Array<{role: string; content: string}> {
     return messages.map(msg => ({
       role: msg.role,
       content: msg.content

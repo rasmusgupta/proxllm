@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth/auth';
 import { prisma } from '@/lib/database/prisma';
-import { encrypt, decrypt } from '@/lib/crypto/encryption';
+import { encrypt } from '@/lib/crypto/encryption';
 import { createLLMProvider } from '@/lib/llm-providers';
 import type { LLMProvider } from '@/types';
 
