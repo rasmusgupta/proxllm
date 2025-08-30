@@ -17,7 +17,6 @@ interface ConversationActions {
   addMessage: (message: Message) => void;
   updateMessage: (messageId: string, content: string) => void;
   updateConversation: (conversationId: string, updates: Partial<Conversation>) => void;
-  toggleStarConversation: (conversationId: string) => void;
   createConversation: (conversation: Omit<Conversation, 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
   deleteConversation: (conversationId: string) => void;
   loadConversations: () => Promise<void>;
@@ -63,22 +62,6 @@ export const useConversationStore = create<ConversationState & ConversationActio
           : state.currentConversation
       })),
 
-      toggleStarConversation: (conversationId) => set((state) => {
-        const conversation = state.conversations.find(c => c.id === conversationId);
-        if (conversation) {
-          const isStarred = !conversation.isStarred;
-          return {
-            conversations: state.conversations.map((conv) =>
-              conv.id === conversationId ? { ...conv, isStarred, updatedAt: new Date() } : conv
-            ),
-            currentConversation: state.currentConversation?.id === conversationId 
-              ? { ...state.currentConversation, isStarred, updatedAt: new Date() }
-              : state.currentConversation
-          };
-        }
-        return state;
-      }),
-      
       createConversation: async (conversationData) => {
         try {
           const response = await fetch('/api/conversations/demo', {
