@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     const skip = (page - 1) * limit;
 
     // Build where clause
-    const where: any = {};
+    const where: Record<string, unknown> = {};
     
     if (search) {
       where.OR = [
@@ -116,7 +116,7 @@ export async function PATCH(request: NextRequest) {
     const allowedUpdates = ['role', 'status', 'plan', 'monthlyLimit'];
     const filteredUpdates = Object.keys(updates)
       .filter(key => allowedUpdates.includes(key))
-      .reduce((obj: any, key) => {
+      .reduce((obj: Record<string, unknown>, key) => {
         obj[key] = updates[key];
         return obj;
       }, {});

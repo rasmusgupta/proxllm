@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -46,7 +47,7 @@ interface UsersResponse {
 }
 
 export default function AdminDashboard() {
-  const { user, isLoaded, isSignedIn } = useUser();
+  const { isLoaded, isSignedIn } = useUser();
   const router = useRouter();
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
@@ -61,7 +62,7 @@ export default function AdminDashboard() {
     totalPages: 0,
   });
 
-  const checkAdminStatus = async () => {
+  const checkAdminStatus = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/users');
       setIsAdmin(response.ok);
@@ -73,9 +74,9 @@ export default function AdminDashboard() {
       setIsAdmin(false);
       router.push('/');
     }
-  };
+  }, [router]);
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams({
@@ -99,7 +100,7 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [search, statusFilter, roleFilter, pagination.page]);
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
@@ -107,15 +108,15 @@ export default function AdminDashboard() {
     } else if (isLoaded && isSignedIn) {
       checkAdminStatus();
     }
-  }, [isLoaded, isSignedIn, router]);
+  }, [isLoaded, isSignedIn, router, checkAdminStatus]);
 
   useEffect(() => {
     if (isAdmin) {
       fetchUsers();
     }
-  }, [search, statusFilter, roleFilter, pagination.page, isAdmin]);
+  }, [isAdmin, fetchUsers]);
 
-  const updateUser = async (userId: string, updates: any) => {
+  const updateUser = async (userId: string, updates: Partial<User>) => {
     try {
       const response = await fetch('/api/admin/users', {
         method: 'PATCH',
@@ -135,7 +136,7 @@ export default function AdminDashboard() {
   };
 
   const getStatusBadge = (status: string) => {
-    const variants: Record<string, any> = {
+    const variants: Record<string, 'default' | 'secondary' | 'destructive' | 'outline'> = {
       ACTIVE: 'default',
       SUSPENDED: 'secondary',
       BANNED: 'destructive',
@@ -303,10 +304,12 @@ export default function AdminDashboard() {
                   <div className="flex items-center space-x-4">
                     <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
                       {user.image ? (
-                        <img
+                        <Image
                           src={user.image}
-                          alt={user.name}
-                          className="w-full h-full rounded-full object-cover"
+                          alt={user.name || 'User'}
+                          width={40}
+                          height={40}
+                          className="rounded-full object-cover"
                         />
                       ) : (
                         <span className="text-sm font-medium">

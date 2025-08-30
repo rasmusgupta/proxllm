@@ -2,6 +2,18 @@ import { auth, currentUser } from '@clerk/nextjs/server';
 import { prisma } from '@/lib/database/prisma';
 import type { User } from '@/types';
 
+interface ClerkEmailAddress {
+  email_address: string;
+}
+
+interface ClerkUserData {
+  id: string;
+  email_addresses: ClerkEmailAddress[];
+  first_name?: string;
+  last_name?: string;
+  image_url?: string;
+}
+
 /**
  * Get the current authenticated user from Clerk and sync with database
  */
@@ -80,7 +92,7 @@ export async function getUserByClerkId(clerkId: string): Promise<User | null> {
 /**
  * Sync user data from Clerk webhook
  */
-export async function syncUserFromClerk(clerkUser: any, eventType: string) {
+export async function syncUserFromClerk(clerkUser: ClerkUserData, eventType: string) {
   try {
     const userData = {
       email: clerkUser.email_addresses?.[0]?.email_address || '',

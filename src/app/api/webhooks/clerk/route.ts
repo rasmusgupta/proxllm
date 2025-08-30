@@ -20,12 +20,11 @@ export async function POST(request: NextRequest) {
 
   // Get the body
   const payload = await request.text();
-  const body = JSON.parse(payload);
 
   // Create a new Svix instance with your secret.
   const wh = new Webhook(process.env.CLERK_WEBHOOK_SECRET || '');
 
-  let evt: any;
+  let evt: Record<string, unknown>;
 
   // Verify the payload with the headers
   try {
@@ -33,7 +32,7 @@ export async function POST(request: NextRequest) {
       'svix-id': svixId,
       'svix-timestamp': svixTimestamp,
       'svix-signature': svixSignature,
-    }) as any;
+    }) as Record<string, unknown>;
   } catch (err) {
     console.error('Error verifying webhook:', err);
     return NextResponse.json(
@@ -50,7 +49,7 @@ export async function POST(request: NextRequest) {
       case 'user.created':
       case 'user.updated':
       case 'user.deleted':
-        await syncUserFromClerk(evt.data, eventType);
+        await syncUserFromClerk(evt.data as any, eventType);
         console.log(`Successfully handled ${eventType} for user ${evt.data.id}`);
         break;
         
